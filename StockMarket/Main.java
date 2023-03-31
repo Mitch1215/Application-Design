@@ -66,7 +66,8 @@ public class Main {
     } // End getDoubleInput
 
     public static void importFile(Stock[] stockArray, String filename) {
-        Scanner read = new Scanner(filename);
+        File newFile = new File(filename);
+        Scanner read = null;
 
         String symbol = "";
         String name = "";
@@ -80,35 +81,37 @@ public class Main {
 
         int counter = 0;
 
-        // if (the file was not found versus if we found it) {
+        try {
+            read = new Scanner(newFile);
+        } catch (FileNotFoundException ex) {
+            ex.getMessage();
+            System.exit(0);
+        }
 
-            read.useDelimiter(",");
-            while (read.hasNext()) {
-                name = read.next();
-                name = name.trim();
+        read.useDelimiter(",");
+        while (read.hasNext()) {
+            name = read.next();
+            name = name.trim();
 
-                symbol = read.next();
-                symbol = symbol.trim();
-                symbol = symbol.toUpperCase();
+            symbol = read.next();
+            symbol = symbol.trim();
+            symbol = symbol.toUpperCase();
 
-                tempCurrent = read.next();
-                tempCurrent = tempCurrent.trim();
-                current = Double.parseDouble(tempCurrent);
+            tempCurrent = read.next();
+            tempCurrent = tempCurrent.trim();
+            current = Double.parseDouble(tempCurrent);
 
-                tempLow = read.next();
-                tempLow = tempLow.trim();
-                low = Double.parseDouble(tempLow);
+            tempLow = read.next();
+            tempLow = tempLow.trim();
+            low = Double.parseDouble(tempLow);
 
-                tempHigh = read.next();
-                tempHigh = tempHigh.trim();
-                high = Double.parseDouble(tempHigh);
+            tempHigh = read.next();
+            tempHigh = tempHigh.trim();
+            high = Double.parseDouble(tempHigh);
 
-                stockArray[counter++] = new Stock(name, symbol, current, low, high);
-            } // End while loop
+            stockArray[counter++] = new Stock(name, symbol, current, low, high);
+        } // End while loop
             read.close();
-        // } else {
-        //     System.out.println("No file selected");
-        // }
     } // End importFile
     
     public static void exportFile(Stock[] stockArray, String filename) {
@@ -147,7 +150,7 @@ public class Main {
             output.write(data);
         } // End for loop
 
-        System.out.println("Stock data was successfuly exported to " + outputFile.getName());
+        System.out.println("Stock data was successfuly exported to " + outputFile.getName() + "\n");
         output.close();
         user.close();
     } // End exportFile
@@ -186,6 +189,8 @@ public class Main {
 		} else {
 			System.out.println("The stock " + stockSymbol + ", you tried to delete is one we are not currently tracking");
 		}
+
+        in.close();
 	} // End deleteStocks
     public static void main(String[] args) {
        Scanner input = new Scanner(System.in);
