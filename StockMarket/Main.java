@@ -69,6 +69,17 @@ public class Main {
         File newFile = new File(filename);
         Scanner read = null;
 
+        if (newFile.exists()) {
+            System.out.println("Absoulute path: " + newFile.getAbsolutePath());
+            System.out.println("Writeable: " + newFile.canWrite());
+            System.out.println("Readable: " + newFile.canRead());
+            System.out.println();
+        } else {
+            System.out.println("File does not exist");
+            System.out.println();
+            System.exit(0);
+        }
+
         String symbol = "";
         String name = "";
         String tempLow = "";
@@ -79,7 +90,7 @@ public class Main {
         double high = 0;
         double current = 0;
 
-        int counter = 0;
+        int currIndex = 0;
 
         try {
             read = new Scanner(newFile);
@@ -88,30 +99,36 @@ public class Main {
             System.exit(0);
         }
 
-        read.useDelimiter(",");
-        while (read.hasNext()) {
-            name = read.next();
-            name = name.trim();
+        try {
+            read.useDelimiter(",");
+            while (read.hasNext()) {
+                name = read.next();
+                name = name.trim();
 
-            symbol = read.next();
-            symbol = symbol.trim();
-            symbol = symbol.toUpperCase();
+                symbol = read.next();
+                symbol = symbol.trim();
+                symbol = symbol.toUpperCase();
 
-            tempCurrent = read.next();
-            tempCurrent = tempCurrent.trim();
-            current = Double.parseDouble(tempCurrent);
+                tempCurrent = read.next();
+                tempCurrent = tempCurrent.trim();
+                current = Double.parseDouble(tempCurrent);
 
-            tempLow = read.next();
-            tempLow = tempLow.trim();
-            low = Double.parseDouble(tempLow);
+                tempLow = read.next();
+                tempLow = tempLow.trim();
+                low = Double.parseDouble(tempLow);
 
-            tempHigh = read.next();
-            tempHigh = tempHigh.trim();
-            high = Double.parseDouble(tempHigh);
-
-            stockArray[counter++] = new Stock(name, symbol, current, low, high);
-        } // End while loop
+                tempHigh = read.next();
+                tempHigh = tempHigh.trim();
+                high = Double.parseDouble(tempHigh);
+                // Then it should go to the next line, but it was catching the name Lululemon on the next line as what is next for the high price
+                stockArray[currIndex++] = new Stock(name, symbol, current, low, high);
+                
+            } // End while loop
             read.close();
+        } catch (Exception e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } // End try-catch
     } // End importFile
     
     public static void exportFile(Stock[] stockArray, String filename) {
@@ -196,7 +213,7 @@ public class Main {
        Scanner input = new Scanner(System.in);
        int userInput = 0;
 
-       Stock[] stockArray = new Stock[10];
+       Stock[] stockArray = new Stock[10]; // Could use an arrayList but the original assignmnet has us working with arrays
        String companyName;
        String stockSymbol;
        double current;
@@ -206,10 +223,14 @@ public class Main {
        String filename = "";
        
        // Import the data of stocks from the file (spreedsheet or txt)
-       System.out.println("Please select an input file with the initial stock data");
+       System.out.println("Please select an input file with the initial stock data. If you do not have a file you would like to select please just hit enter.");
        filename = input.nextLine();
 
-       importFile(stockArray, filename);
+       if (filename.equals(null)) {
+        // No import file was specified so it hits this statement and moves on
+       } else {
+        importFile(stockArray, filename);
+       }
 
        while (userInput != 4) {
             userInput = getIntegerInput(input, true, 0, true, 4, "Enter 0 if you want to add a stock\nEnter 1 if you want stock statistics\nEnter 2 if you want to output stock data to file stockdata.txt\nEnter 3 if you want to delete a stock\nEnter 4 if you want to exit", "Invalid input. Please try again.");
