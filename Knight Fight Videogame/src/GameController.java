@@ -42,7 +42,7 @@ public class GameController extends Object {
             processRemoveActive(command.substring(command.indexOf("remove") + 6).trim());
             return true;
         }
-        if ((command.equalsIgnoreCase("adventure") || command.equalsIgnoreCase("quest") || command.equalsIgnoreCase("adventure"))) {
+        if ((command.equalsIgnoreCase("adventure") || command.equalsIgnoreCase("quest") || command.equalsIgnoreCase("explore"))) {
             engine.initialize();
             engine.runCombat();
             engine.clear();

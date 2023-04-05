@@ -21,6 +21,19 @@ public class ConsoleView extends Object implements GameView {
 
     public String displayMainMenu() {
         System.out.print("What would you like to do? ");
+        System.out.println();
+        System.out.println("\tls or list all  - listing the knights");
+        System.out.println("\tlist active  - list the active knights knights only");
+        System.out.println("\tshow <name> or <id> - show the knight details card");
+        System.out.println("\tset active <name> or <id> - set knight as active (note: only 4 knights can be active)");
+        System.out.println("\tremove active <name> or <id> - remove a knight from active status (heals knight)"); // FIX ME
+        System.out.println("\texplore or adventure or quest - find random monsters to fight"); // FIX ME
+        System.out.println("\tsave <filename> - save the game to the file name (default: saveData.csv)");
+        System.out.println("\texit or goodbye - to leave the game");
+        System.out.println();
+        System.out.println("Game rules: You can have four active knights. As long as they are active, they won't heal, but they can gain XP by going on adventures.");
+        System.out.println("When you make a knight inactive, they will heal. How many monsters can you defeat before, you have to heal?");
+        System.out.println();
         String userInput = in.nextLine();
         return userInput;
     } // End displayMainMenu
@@ -30,11 +43,11 @@ public class ConsoleView extends Object implements GameView {
 
         System.out.println("\tls or list all  - listing the knights");
         System.out.println("\tlist active  - list the active knights knights only");
-        System.out.println("\tshow name or id - show the knight details card");
-        System.out.println("\tset active name or id - set knight as active (note: only 4 knights can be active)");
-        System.out.println("\tremove active name or id - remove a knight from active status (heals knight)");
+        System.out.println("\tshow <name> or <id> - show the knight details card");
+        System.out.println("\tset active <name> or <id> - set knight as active (note: only 4 knights can be active)");
+        System.out.println("\tremove active <name> or <id> - remove a knight from active status (heals knight)");
         System.out.println("\texplore or adventure or quest - find random monsters to fight");
-        System.out.println("\tsave filename - save the game to the file name (default: saveData.csv)");
+        System.out.println("\tsave <filename> - save the game to the file name (default: saveData.csv)");
         System.out.println("\texit or goodbye - to leave the game");
         System.out.println();
         System.out.println("Game rules: You can have four active knights. As long as they are active, they won't heal, but they can gain XP by going on adventures.");
